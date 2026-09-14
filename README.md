@@ -1,7 +1,7 @@
 # Privacy Policy for 1stMD Analytics Bot
 
 **Effective date:** 13 September 2026  
-**Last updated:** 13 September 2026
+**Last updated:** 14 September 2026
 
 This policy explains how 1stMD Analytics Bot (the **Bot**) collects, uses, stores,
 and discloses information when it is installed in a Discord server. The Bot is
@@ -20,8 +20,9 @@ installed:
 - **Server and configuration data:** server IDs; channel, category, role, panel, and
   message IDs; configured timezone; enabled modules; analytics access roles; tracked
   roles and channels; saved report definitions and schedules; administrator-created
-  labels; configuration history; and the user ID of an administrator who changes a
-  setting.
+  labels; channel type, category placement and ordering; observed server-structure
+  changes; alert delivery state; configuration history; and the user ID of an
+  administrator who changes a setting.
 - **Membership data:** user IDs, whether an account is a bot, join and departure
   times, role IDs, and the times at which observed role memberships begin and end.
 - **Text activity metadata:** message IDs used to prevent duplicate counting,
@@ -68,6 +69,8 @@ We use the information only to provide, secure, and maintain the Bot, including:
 - role-based and member-level analytics requested by authorized server staff;
 - scheduled-event, command-usage, and moderation workload reports;
 - server statistics panels, scheduled reports, and configured counters;
+- administrator-configured alerts when channels move between categories or their
+  order changes;
 - duplicate-event prevention, outage recovery, diagnostics, abuse prevention, and
   service reliability.
 
@@ -83,10 +86,11 @@ Individuals may object as described below.
 ## Who can see information
 
 The normal server panel contains aggregate statistics and is posted only in the
-channel selected by a server administrator. Detailed member, role, channel, voice,
-export, and moderation reports are restricted using Discord permissions and the
-server's configured analytics roles. Some requested reports are delivered as private
-Discord interaction responses.
+channel or thread selected by a server administrator. Structure-change alerts are
+also sent only to the administrator-configured staff destination. Detailed member,
+role, channel, voice, export, and moderation reports are restricted using Discord
+permissions and the server's configured analytics roles. Some requested reports are
+delivered as private Discord interaction responses.
 
 Information is not shared between Discord servers. We may disclose information only:
 
