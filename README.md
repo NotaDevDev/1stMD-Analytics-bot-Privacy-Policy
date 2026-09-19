@@ -1,7 +1,7 @@
 # Privacy Policy for 1stMD Analytics Bot
 
 **Effective date:** 13 September 2026  
-**Last updated:** 14 September 2026
+**Last updated:** 19 September 2026
 
 This policy explains how 1stMD Analytics Bot (the **Bot**) collects, uses, stores,
 and discloses information when it is installed in a Discord server. The Bot is
@@ -37,11 +37,16 @@ installed:
   duration; the invoking user's ID where needed for unique-user counts; and Discord
   audit-entry IDs, action types, moderator and target IDs, timestamps, and whether
   an action was automated.
+- **Active ticket-claim data:** the claimant's Discord user ID, ticket or channel
+  name, team, and claim timestamp for tickets that are currently claimed in the
+  FirstMD logging system.
 - **Operational data:** collection receipts, incomplete-coverage periods, health
   timestamps, bounded error codes, delivery attempts, and panel or counter state.
 
-The Bot receives this information from Discord's Gateway and API, and from settings
-entered by authorized server administrators.
+The Bot receives this information from Discord's Gateway and API, from settings
+entered by authorized server administrators, and from a sanitized current-state
+snapshot produced by the FirstMD logging bot from its configured Ticket Claims Sheet.
+The Analytics Bot does not receive the Sheet's Google credentials.
 
 ## Information we do not collect
 
@@ -68,6 +73,7 @@ We use the information only to provide, secure, and maintain the Bot, including:
 - text-channel and voice-channel activity totals and leaderboards;
 - role-based and member-level analytics requested by authorized server staff;
 - scheduled-event, command-usage, and moderation workload reports;
+- current active-claim totals and team or member breakdowns;
 - server statistics panels, scheduled reports, and configured counters;
 - administrator-configured alerts when channels move between categories or their
   order changes;
@@ -85,12 +91,12 @@ Individuals may object as described below.
 
 ## Who can see information
 
-The normal server panel contains aggregate statistics and is posted only in the
-channel or thread selected by a server administrator. Structure-change alerts are
-also sent only to the administrator-configured staff destination. Detailed member,
-role, channel, voice, export, and moderation reports are restricted using Discord
-permissions and the server's configured analytics roles. Some requested reports are
-delivered as private Discord interaction responses.
+The normal server and active-claims panels contain aggregate statistics and are posted
+only in channels or threads selected by a server administrator. Structure-change
+alerts are also sent only to the administrator-configured staff destination. Detailed
+member, role, channel, voice, claims, export, and moderation reports are restricted
+using Discord permissions and the server's configured analytics roles. Some requested
+reports are delivered as private Discord interaction responses.
 
 Information is not shared between Discord servers. We may disclose information only:
 
@@ -126,7 +132,15 @@ data-quality issues, or comply with a verified request.
 
 Incomplete setup drafts are deleted when setup is activated; otherwise they remain
 until replaced or deleted with the server's data. Operational logs are size-limited
-and rotate. Encrypted managed backups are retained for up to **30 days**.
+and rotate. The VDS retains encrypted managed backups for up to **2 days**;
+independently transferred encrypted Windows backup history is retained for up to
+**30 days**.
+
+Active-claim analytics is a current-state feature. When a ticket is unclaimed and the
+next valid snapshot is synchronized, that ticket is removed from active reports and
+the active analytics database. The Bot retains the last successful snapshot during a
+temporary Sheet or synchronization failure so an outage does not appear as a false
+zero.
 
 We delete or de-identify Discord API data when it is no longer needed for the Bot's
 stated functions, when the service is discontinued, when Discord requires deletion,
@@ -136,8 +150,8 @@ itself immediately erase existing records; the server owner should submit a dele
 request.
 
 After data is deleted from the active database, backup copies expire through the
-30-day backup cycle. If a backup must be restored for disaster recovery, deletion
-requests completed after that backup was created will be reapplied.
+retention cycles described above. If a backup must be restored for disaster recovery,
+deletion requests completed after that backup was created will be reapplied.
 
 ## Your choices and rights
 
