@@ -1,7 +1,7 @@
 # Privacy Policy for 1stMD Analytics Bot
 
 **Effective date:** 13 September 2026  
-**Last updated:** 19 September 2026
+**Last updated:** 3 October 2026
 
 This policy explains how 1stMD Analytics Bot (the **Bot**) collects, uses, stores,
 and discloses information when it is installed in a Discord server. The Bot is
@@ -40,8 +40,25 @@ installed:
 - **Active ticket-claim data:** the claimant's Discord user ID, ticket or channel
   name, team, and claim timestamp for tickets that are currently claimed in the
   FirstMD logging system.
+- **Onboarding ticket panels:** thread IDs, observed thread names, ticket numbers
+  where available, onboarder names derived from thread names, and opening times.
+- **Application panels:** source message IDs, author IDs, posting times, and the
+  Discord user IDs of people who claim an application with a speech-balloon
+  reaction. The Bot counts accepted, denied, and awaiting applications for the
+  configured source channel. Public and private panel views link to the source
+  messages; claimers are displayed in the claimed panel.
 - **Operational data:** collection receipts, incomplete-coverage periods, health
   timestamps, bounded error codes, delivery attempts, and panel or counter state.
+
+For configured application channels, the Bot briefly reads message text and embed
+text to recognize `accepted successfully` and `denied successfully` notices. For
+configured Onboarding ticket parents, it briefly reads Ticket Tool's opening
+message and embed title to distinguish renamed Onboarding tickets from other
+ticket types. It reads reaction counts and the user IDs of claimers. The Bot does
+not save the message text, embed text, or reaction contents in its database or
+export them. The resulting application classifications are used to update panel
+membership and counts. A message may still be held temporarily in process memory
+by the Discord client while it is handled.
 
 The Bot receives this information from Discord's Gateway and API, from settings
 entered by authorized server administrators, and from a sanitized current-state
@@ -50,19 +67,23 @@ The Analytics Bot does not receive the Sheet's Google credentials.
 
 ## Information we do not collect
 
-The Bot does **not** request, read, or store:
+The Bot does **not** store raw message bodies, embed text, or attachment contents.
+It does not read or store:
 
-- message bodies or other message content;
-- attachments, embeds, reactions, or polls;
 - direct messages;
 - voice audio, speech, or recordings;
 - Discord presence or activity status;
-- command arguments;
 - email addresses, phone numbers, passwords, payment details, IP addresses, cookies,
   advertising identifiers, or precise location data.
 
-The Bot counts that a message occurred. It cannot reconstruct the message from the
-stored analytics record. Voice time means time connected to a voice or Stage channel;
+The Bot processes slash-command options to carry out the requested configuration or
+report action. It does not keep a separate log of command argument text; settings
+and administrator-created labels saved by those commands are covered above.
+
+The Bot counts that a message occurred and uses limited content checks for the
+configured application and Onboarding features described above. It cannot
+reconstruct a message body from the stored analytics record. Voice time means time
+connected to a voice or Stage channel;
 it does not measure whether a person spoke, listened, or paid attention.
 
 ## How we use information
@@ -74,6 +95,8 @@ We use the information only to provide, secure, and maintain the Bot, including:
 - role-based and member-level analytics requested by authorized server staff;
 - scheduled-event, command-usage, and moderation workload reports;
 - current active-claim totals and team or member breakdowns;
+- open Onboarding ticket and application claim panels, including accepted/denied
+  application counts and links to source messages;
 - server statistics panels, scheduled reports, and configured counters;
 - administrator-configured alerts when channels move between categories or their
   order changes;
@@ -96,7 +119,10 @@ only in channels or threads selected by a server administrator. Structure-change
 alerts are also sent only to the administrator-configured staff destination. Detailed
 member, role, channel, voice, claims, export, and moderation reports are restricted
 using Discord permissions and the server's configured analytics roles. Some requested
-reports are delivered as private Discord interaction responses.
+reports are delivered as private Discord interaction responses. Configured
+Onboarding and application panels can display links to source threads or messages,
+onboarder names, dates, and the Discord IDs of claimers in administrator-selected
+destinations. Their export controls return private interaction responses.
 
 Information is not shared between Discord servers. We may disclose information only:
 
@@ -172,7 +198,10 @@ would affect another person's rights, security, or privacy.
 
 Server administrators can stop future collection by excluding channels, disabling
 modules, or removing the Bot. Members may also contact their server administrators,
-who can relay a request to the Operator.
+who can relay a request to the Operator. The Bot does not currently offer an
+individual, automatic opt-out from message-content checks in a configured source
+channel; a member can request access, restriction, or deletion through the privacy
+contact above.
 
 ## Children
 
@@ -191,7 +220,7 @@ practicable.
 
 - **Operator:** NotaDevDev
 - **Privacy contact on Discord:** Deveire (`631393538592210965`)
-- **Project:** <https://github.com/NotaDevDev/Server-Analytics-Bot>
+- **Project:** <https://github.com/NotaDevDev/1stMD-Analytics-Bot>
 
 This policy is intended to be consistent with the
 [Discord Developer Terms of Service](https://support-dev.discord.com/hc/en-us/articles/8562894815383-Discord-Developer-Terms-of-Service)
