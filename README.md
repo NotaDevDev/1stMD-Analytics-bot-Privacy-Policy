@@ -48,7 +48,8 @@ installed:
   configured source channel. Public and private panel views link to the source
   messages; claimers are displayed in the claimed panel.
 - **Operational data:** collection receipts, incomplete-coverage periods, health
-  timestamps, bounded error codes, delivery attempts, and panel or counter state.
+  timestamps, bounded error codes, delivery attempts, panel or counter state,
+  and a minimal user-ID suppression record after an individual erasure.
 
 For configured application channels, the Bot briefly reads message text and embed
 text to recognize `accepted successfully` and `denied successfully` notices. For
@@ -135,10 +136,11 @@ Information is not shared between Discord servers. We may disclose information o
 ## Storage, security, and international processing
 
 Production data is stored in a dedicated PostgreSQL database on access-controlled
-infrastructure. The database does not expose a public network port. The Bot uses
-file-backed secrets, role-based report access, bounded queues and logs, health
-monitoring, and encrypted backups. Access is limited to the Operator and people who
-need it to operate or secure the service.
+infrastructure. The database does not expose a public network port. Its current
+data volume is encrypted at rest and requires manual unlock after a server
+restart. The Bot uses file-backed secrets, role-based report access, bounded
+queues and logs, health monitoring, and encrypted backups. Access is limited to
+the Operator and people who need it to operate or secure the service.
 
 Discord, infrastructure providers, and the Operator may process information in
 different countries. Where required, appropriate contractual or legal safeguards
@@ -175,9 +177,24 @@ limited continued retention. Removing the Bot stops new collection but does not 
 itself immediately erase existing records; the server owner should submit a deletion
 request.
 
-After data is deleted from the active database, backup copies expire through the
-retention cycles described above. If a backup must be restored for disaster recovery,
-deletion requests completed after that backup was created will be reapplied.
+For a verified individual deletion request, the Operator can use a restricted,
+confirmation-gated tool to erase or de-identify records directly linked to that
+Discord user ID in the Bot's active database **across all servers recorded by
+the Bot**. This includes attributable membership, text and voice activity,
+command, RSVP, claim, leave, and application-panel records; references in shared
+moderation or configuration records are de-identified. The Bot retains the user ID
+and erasure time in a minimal suppression record so later Discord events and shared
+snapshots do not recreate those records. That record is used only to enforce the
+deletion and is not included in reports.
+
+The database tool does not itself remove original Discord posts, previously sent
+messages or exports, data held by the separate FirstMD logging system or Sheets,
+Onboarding ticket names that cannot reliably be matched to a user ID, or backup
+copies. The Operator reviews these separately when handling the request. Managed
+backup copies expire through the retention cycles above; older recovery copies,
+including a retained pre-encryption rollback volume, require separate review or
+retirement. If an older copy is restored, completed deletion requests must be
+reapplied before the Bot resumes processing it.
 
 ## Your choices and rights
 
@@ -187,9 +204,11 @@ may also complain to your local data-protection authority.
 
 To make a privacy request, contact **Deveire** privately on Discord (user ID
 **`631393538592210965`**). Include your Discord user ID and the server ID concerned so
-the correct records can be located. A server owner may request deletion of all data
-associated with their server. Do not place Discord IDs or other personal information
-in a public GitHub issue.
+the request can be verified; an individual deletion from the Bot's active database
+applies across all servers recorded by it. A server owner may request deletion of
+all data associated with their server. Do not place Discord IDs or other personal
+information in a public GitHub issue. There is no public self-service deletion
+command. Only the Operator can use the restricted tool after verification.
 
 We may ask you to verify control of the relevant Discord account or authority over
 the server. Verified requests will be handled promptly and normally within 30 days.
